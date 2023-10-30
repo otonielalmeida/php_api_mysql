@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <table id="myTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Manufacturer</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+ -->
+    <script>
+      fetch("http://localhost/api_exercise/getAllProduct.php?get_data", {
+        method: "GET",
+        /* mode: "no-cors", */
+        dataType: "json",
+      })
+        .then((response) => response.json())
+        .then((data) => /* console.log(data) & */ loadData(data));
+
+      function loadData(data) {
+        var myTable = document.querySelector(".data_p");
+        var tr = document.querySelector(".tr");
+
+        for (var i = 0; i < data.length; i++) {
+          var text =
+            data[i].name + "  " + data[i].manufacturer + " " + data[i].stock;
+          +" ";
+          var name = data[i].name;
+          var manufacturer = data[i].manufacturer;
+          var stock = data[i].stock;
+          var td = document.createElement("td");
+          var td2 = document.createElement("td");
+          var td1 = document.createElement("td");
+          td.append(name);
+          td1.append(manufacturer);
+          td2.append(stock);
+          tr.append(td);
+          tr.append(td1);
+          tr.append(td2);
+          myTable.append(tr);
+          myTable.appendChild(document.createElement("br"));
+        }
+      }
+    </script>
+    <!-- <p class="data_p"></p> -->
+    <table
+      class="data_p"
+      style="display: flex; justify-content: center; flex-direction: column"
+    >
+      <tr
+        class="tr"
+        style="background-color: antiquewhite; flex-direction: column"
+      ></tr>
+    </table>
+    <script>
+      console.log(123);
+      function sendReq() {
+        fetch("http://localhost/api_exercise/postProduct.php", {
+          method: "POST",
+          dataType: "json",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "milk",
+            manufacturer: "cowow",
+            stock: "100",
+          }),
+        });
+        console.log("success");
+      }
+      //sendReq();
+    </script>
+    <script src="./DataTables/datatables.js"></script>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    >
+      $("#myTable").dataTable();
+    </script>
+  </body>
+</html>
